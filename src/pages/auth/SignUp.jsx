@@ -74,12 +74,21 @@ const Button = styled.button`
   font-size: 16px;
   margin-top: 470px;
   position: absolute;
+  cursor: pointer;
 `;
 const SendText = styled.span`
   margin-top: 8px;
   font-size: 12px;
   margin-left: 14px;
   color: #616161;
+`;
+const Logo = styled.img`
+  width: 130px;
+  height: 130px;
+  margin-bottom: 12px;
+  position: absolute;
+  display: flex;
+  margin-left: -1100px;
 `;
 
 function SignUp() {
@@ -88,6 +97,7 @@ function SignUp() {
 
   return (
     <SignUpContainer>
+      <Logo src="/images/Myfoli.png" alt="Myfoli" />
       <Container>
         <Title>회원가입</Title>
         <Certification>
