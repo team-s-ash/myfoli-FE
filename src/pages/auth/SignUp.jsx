@@ -92,34 +92,35 @@ const Logo = styled.img`
 `;
 
 function SignUp() {
-  const [value, setValue] = useState("");
-  const [focused, setFocused] = useState(false);
-
+  const [step, setStep] = useState("email");
   return (
     <SignUpContainer>
       <Logo src="/images/Myfoli.png" alt="Myfoli" />
       <Container>
         <Title>회원가입</Title>
-        <Certification>
-          <InputWrapper>
-            {!value && !focused && (
-              <FakePlaceholder>
-                {"이메일\n\n예) s00000@gsm.hs.kr"}
-              </FakePlaceholder>
-            )}
-            <EmailCerti
-              value={value}
-              onChange={(e) => setValue(e.target.value)}
-              onFocus={() => setFocused(true)}
-              onBlur={() => setFocused(false)}
-            />
-            <SendText>적은 이메일로 인증번호가 보내집니다.</SendText>
-          </InputWrapper>
-        </Certification>
         <Button>이메일 인증</Button>
       </Container>
     </SignUpContainer>
   );
+}
+
+function InputEmail({ onNext }) {
+  const [value, setValue] = useState("");
+  const [focused, setFocused] = useState(false);
+  <Certification>
+    <InputWrapper>
+      {!value && !focused && (
+        <FakePlaceholder>{"이메일\n\n예) s00000@gsm.hs.kr"}</FakePlaceholder>
+      )}
+      <EmailCerti
+        value={value}
+        onChange={(e) => setValue(e.target.value)}
+        onFocus={() => setFocused(true)}
+        onBlur={() => setFocused(false)}
+      />
+      <SendText>적은 이메일로 인증번호가 보내집니다.</SendText>
+    </InputWrapper>
+  </Certification>;
 }
 
 export default SignUp;
