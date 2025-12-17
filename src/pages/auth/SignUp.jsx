@@ -1,5 +1,5 @@
-import React, { useState } from "react";
 import styled from "styled-components";
+// ...existing code...
 
 const SignUpContainer = styled.div`
   display: flex;
@@ -20,49 +20,52 @@ const Title = styled.h1`
   position: absolute;
 `;
 
-const Certification = styled.div`
-  width: 500px;
-  height: 100px;
-  background-color: #ffffff;
-  border-radius: 14px;
-  margin-top: 90px;
+const InputContainer = styled.div`
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-`;
-
-const InputWrapper = styled.div`
-  position: relative;
   width: 475px;
-  height: 60px;
-  transform: translateY(-12px);
+  min-height: 100px;
+  max-height: 500px;
+  background-color: white;
+  border-radius: 20px;
+  margin-top: 100px;
+  position: relative;
 `;
 
-const EmailCerti = styled.input`
-  width: 100%;
-  height: 100%;
+const InputBox = styled.input`
+  width: 450px;
+  height: 55px;
   background-color: #f4f4f5;
-  border-radius: 14px;
-  padding: 8px 20px;
+  border-radius: 11px;
   border: none;
-  outline: none;
-  font-family: inherit;
-  font-size: 14px;
+  padding: 12px 14px;
   box-sizing: border-box;
-`;
-
-const FakePlaceholder = styled.span`
-  position: absolute;
-  left: 6px;
-  top: 6px;
+  font-size: 14px;
+  outline: none;
   color: #616161;
-  white-space: pre-line;
-  pointer-events: none;
-  font-size: 12px;
-  line-height: 1.2;
-  margin-left: 10px;
+  &::placeholder {
+    color: #616161;
+    opacity: 1;
+  }
+`;
+const InputText = styled.div`
+  font-size: 13px;
+  color: #616161;
+  margin-left: -220px;
+  margin-top: 5px;
 `;
 
+/* ...existing code... */
+const Logo = styled.img`
+  width: 120px;
+  height: 120px;
+  margin-bottom: 12px;
+  position: absolute;
+  display: flex;
+  margin-left: -1100px;
+`;
 const Button = styled.button`
   width: 475px;
   height: 60px;
@@ -71,56 +74,27 @@ const Button = styled.button`
   border: none;
   color: white;
   font-weight: bold;
-  font-size: 16px;
+  font-size: 18px;
   margin-top: 470px;
   position: absolute;
   cursor: pointer;
 `;
-const SendText = styled.span`
-  margin-top: 8px;
-  font-size: 12px;
-  margin-left: 14px;
-  color: #616161;
-`;
-const Logo = styled.img`
-  width: 130px;
-  height: 130px;
-  margin-bottom: 12px;
-  position: absolute;
-  display: flex;
-  margin-left: -1100px;
-`;
 
+/* ...existing code... */
 function SignUp() {
-  const [step, setStep] = useState("email");
   return (
     <SignUpContainer>
       <Logo src="/images/Myfoli.png" alt="Myfoli" />
       <Container>
         <Title>회원가입</Title>
-        <Button>이메일 인증</Button>
+        <InputContainer>
+          <InputBox type="text" placeholder="이메일" />
+          <InputText>적은 이메일로 인증번호가 보내집니다.</InputText>
+          <InputBox type="text" placeholder="인증번호 입력" />
+        </InputContainer>
+        <Button onClick={Number}>인증번호 보내기</Button>
       </Container>
     </SignUpContainer>
   );
 }
-
-function InputEmail({ onNext }) {
-  const [value, setValue] = useState("");
-  const [focused, setFocused] = useState(false);
-  <Certification>
-    <InputWrapper>
-      {!value && !focused && (
-        <FakePlaceholder>{"이메일\n\n예) s00000@gsm.hs.kr"}</FakePlaceholder>
-      )}
-      <EmailCerti
-        value={value}
-        onChange={(e) => setValue(e.target.value)}
-        onFocus={() => setFocused(true)}
-        onBlur={() => setFocused(false)}
-      />
-      <SendText>적은 이메일로 인증번호가 보내집니다.</SendText>
-    </InputWrapper>
-  </Certification>;
-}
-
 export default SignUp;
