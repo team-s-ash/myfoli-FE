@@ -16,7 +16,7 @@ const Logo = styled.img`
 const WriteText = styled.a`
   font-size: 14px;
   padding-left: 35px;
-  margin-top: -20px;
+  margin-top: -15px;
   text-decoration: none;
   color: black;
   &:link,
@@ -32,7 +32,7 @@ const WriteText = styled.a`
 const MypageText = styled.a`
   font-size: 14px;
   padding-left: 35px;
-  margin-top: -20px;
+  margin-top: -15px;
   text-decoration: none;
   color: black;
   &:link,
@@ -48,7 +48,7 @@ const MypageText = styled.a`
 const AuthText = styled.a`
   font-size: 14px;
   padding-left: 760px;
-  margin-top: -20px;
+  margin-top: -15px;
   text-decoration: none;
   color: black;
   &:link,
