@@ -71,7 +71,6 @@ const PortfolioBox = styled.div`
 const MajorName = styled.b`
   font-size: 14px;
 `;
-// ...existing code...
 
 export function Main() {
   const [selected, setSelected] = useState(null);

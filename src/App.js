@@ -1,14 +1,10 @@
-import { Header } from "./components/header";
-import { Main } from "./pages/auth/main";
-import { Portfolio } from "./pages/auth/portfolio";
+import React from "react";
+import Router from "./Router";
 import SignUp from "./pages/auth/SignUp";
+import Login from "./pages/auth/Login";
 
 function App() {
-  return (
-    <div>
-      <Portfolio />
-    </div>
-  );
+  return <Login />;
 }
 
 export default App;

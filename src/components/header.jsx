@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 const HeaderBox = styled.header`
   display: flex;
@@ -6,14 +7,17 @@ const HeaderBox = styled.header`
   margin-top: -10px;
 `;
 
-const Logo = styled.img`
-  width: 120px;
-  height: 120px;
+const LogoLink = styled(Link)`
   display: flex;
   margin-left: 80px;
   margin-top: -10px;
+  img {
+    width: 120px;
+    height: 120px;
+    display: block;
+  }
 `;
-const WriteText = styled.a`
+const WriteText = styled(Link)`
   font-size: 14px;
   padding-left: 35px;
   margin-top: -15px;
@@ -29,7 +33,7 @@ const WriteText = styled.a`
     color: #606057;
   }
 `;
-const MypageText = styled.a`
+const MypageText = styled(Link)`
   font-size: 14px;
   padding-left: 35px;
   margin-top: -15px;
@@ -71,11 +75,13 @@ const HeaderLine = styled.hr`
 export function Header() {
   return (
     <HeaderBox>
-      <Logo src="/images/Myfoli.png" alt="Myfoli" />
-      <WriteText href="">
+      <LogoLink to="/">
+        <img src="/images/Myfoli.png" alt="Myfoli" />
+      </LogoLink>
+      <WriteText to="/portfolio">
         <b>포트폴리오 작성하기</b>
       </WriteText>
-      <MypageText href="">
+      <MypageText to="/mypage">
         <b>마이페이지</b>
       </MypageText>
       <AuthText href="">
