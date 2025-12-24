@@ -1,7 +1,8 @@
 import React, { useState, useRef, useEffect } from "react";
 import styled, { createGlobalStyle } from "styled-components";
+import axios from "axios";
 
-/* ===== GlobalStyle (페이지 전체 스크롤 제거) ===== */
+/* ===== GlobalStyle ===== */
 const GlobalStyle = createGlobalStyle`
   html, body {
     margin: 0;
@@ -28,7 +29,6 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  box-sizing: border-box;
 `;
 
 const Logo = styled.img`
@@ -43,9 +43,6 @@ const InputContainer = styled.div`
   flex-direction: column;
   gap: 12px;
   padding: 20px;
-  box-sizing: border-box;
-  background-color: #fff;
-  border-radius: 12px;
 `;
 
 const InputBox = styled.input`
@@ -55,20 +52,15 @@ const InputBox = styled.input`
   border-radius: 11px;
   border: none;
   padding: 12px 14px;
-  box-sizing: border-box;
   font-size: 14px;
   outline: none;
   color: #616161;
-
-  &::placeholder {
-    color: #616161;
-    opacity: 1;
-  }
 `;
 
 const InputText = styled.div`
   font-size: 13px;
   color: #616161;
+  margin-left: 4px;
 `;
 
 const ErrorText = styled.div`
@@ -87,34 +79,37 @@ const Button = styled.button`
   font-size: 18px;
   margin-top: 20px;
   cursor: pointer;
-
-  &:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
-  }
 `;
 
 const Row = styled.div`
   display: flex;
   flex-direction: column;
   gap: 12px;
-  width: 100%;
 `;
 
 const SmallInput = styled(InputBox)`
   height: 55px;
 `;
 
-/* ===== Component ===== */
+/* ===== 카테고리 매핑 ===== */
+const categoryMap = {
+  frontend: 1,
+  backend: 2,
+  design: 3,
+  devops: 4,
+  game: 5,
+  ai: 6,
+};
+
 function SignUp() {
   const [showVerification, setShowVerification] = useState(false);
   const [verified, setVerified] = useState(false);
   const [email, setEmail] = useState("");
-  const [error, setError] = useState("");
   const [verification, setVerification] = useState("");
   const [password, setPassword] = useState("");
   const [nickname, setNickname] = useState("");
   const [interest, setInterest] = useState("");
+  const [error, setError] = useState("");
 
   const verificationRef = useRef(null);
   const passwordRef = useRef(null);
@@ -130,7 +125,12 @@ function SignUp() {
 
   const isSchoolEmail = (value) => /^[^\s@]+@gsm\.hs\.kr$/i.test(value.trim());
 
+  const handleVerificationChange = (e) => {
+    setVerification(e.target.value.replace(/\D/g, "").slice(0, 6));
+  };
+
   const handleSendClick = () => {
+    /* 이메일 검사 */
     if (!isSchoolEmail(email)) {
       setError("학교 이메일(@gsm.hs.kr)만 사용할 수 있습니다.");
       return;
@@ -138,11 +138,13 @@ function SignUp() {
 
     setError("");
 
+    /* 인증번호 보내기 */
     if (!showVerification) {
       setShowVerification(true);
       return;
     }
 
+    /* 인증번호 확인 */
     if (showVerification && !verified) {
       if (verification.length !== 6) {
         setError("6자리 인증번호를 입력해주세요.");
@@ -152,21 +154,34 @@ function SignUp() {
       return;
     }
 
+    /* 회원가입 */
     if (verified) {
       if (password.length < 8 || password.length > 12) {
         setError("비밀번호는 8~12자여야 합니다.");
         return;
       }
+
       if (!nickname.trim()) {
         setError("닉네임을 입력해주세요.");
         return;
       }
-      alert("회원가입 요청 전송(샘플)");
-    }
-  };
 
-  const handleVerificationChange = (e) => {
-    setVerification(e.target.value.replace(/\D/g, "").slice(0, 6));
+      axios
+        .post("http://localhost:8888/posts", {
+          email: email,
+          name: nickname,
+          password: password,
+          categoryId: interest ? [categoryMap[interest]] : [],
+        })
+        .then((res) => {
+          console.log(res.data);
+          alert("회원가입이 완료되었습니다!");
+        })
+        .catch((err) => {
+          console.error(err);
+          setError("회원가입 중 오류가 발생했습니다.");
+        });
+    }
   };
 
   return (
@@ -200,11 +215,8 @@ function SignUp() {
                   value={verification}
                   onChange={handleVerificationChange}
                   ref={verificationRef}
-                  inputMode="numeric"
                 />
-                <InputText>
-                  이메일로 온 6자리 인증번호를 입력해주세요.
-                </InputText>
+                <InputText>6자리 인증번호를 입력해주세요.</InputText>
               </>
             )}
 
@@ -217,7 +229,9 @@ function SignUp() {
                   onChange={(e) => setPassword(e.target.value)}
                   ref={passwordRef}
                 />
-                <InputText>비밀번호는 8~12자, 2종류 이상 조합</InputText>
+                <InputText>
+                  비밀번호는 8~12자, 영문/숫자/특수문자 중 2가지 이상
+                </InputText>
 
                 <SmallInput
                   type="text"
@@ -238,7 +252,6 @@ function SignUp() {
                   <option value="devops">데브옵스</option>
                   <option value="game">게임개발</option>
                   <option value="ai">AI</option>
-                  <option value="none">없음</option>
                 </SmallInput>
               </Row>
             )}

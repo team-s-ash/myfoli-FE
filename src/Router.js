@@ -1,9 +1,8 @@
-import React from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import { Header } from "./components/header";
 import { Main } from "./pages/auth/main";
 import { Mypage } from "./pages/auth/mypage";
 import Portfolio from "./pages/auth/portfolio";
+import Login from "./pages/auth/Login";
 import SignUp from "./pages/auth/SignUp";
 
 const Router = () => {
@@ -13,6 +12,7 @@ const Router = () => {
         <Route path="/" element={<Main />} />
         <Route path="/main" element={<Main />} />
         <Route path="/portfolio" element={<Portfolio />} />
+        <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/mypage" element={<Mypage />} />
         <Route path="*" element={<Navigate to="/" replace />} />
